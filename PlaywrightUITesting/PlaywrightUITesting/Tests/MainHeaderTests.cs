@@ -59,7 +59,7 @@ namespace PlaywrightUITesting.Tests
                 }
                 if (item.Key == "cart")
                 {
-                    await Expect(page.GetByText("Your shopping is empty")).ToBeAttachedAsync();
+                    await Expect(page.GetByText("Your shopping cart is empty")).ToBeAttachedAsync();
                 }
             } 
         }
