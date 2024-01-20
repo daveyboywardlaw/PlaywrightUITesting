@@ -16,7 +16,7 @@ namespace PlaywrightUITesting.Tests
 {
     public class MainHeaderTests : PageTest
     {
-        Utility util = new Utility();
+        CommonActions util = new CommonActions();
 
         [SetUp]
         public async Task Setup()
