@@ -4,6 +4,8 @@ namespace PlaywrightUITesting
 {
     public class Utilities
     {
+        string  HomeUrl = "https://ecommerce-playground.lambdatest.io/";
+
         public async Task<IPage> CreateNewPage()
         {
             using var playwright = await Playwright.CreateAsync();
