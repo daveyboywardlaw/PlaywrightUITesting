@@ -9,19 +9,20 @@ using NUnit.Framework;
 
 namespace PlaywrightUITesting.Pages
 {
-    internal class SearchHeader : PageTest
+    public class SearchHeader : PageTest
     {
-        private IPage _page;
-        private readonly ILocator _searchCategory;
-        private readonly ILocator _searchText;
-        private readonly ILocator _searchButton;
-        
+        public IPage _page;
+        public readonly ILocator SearchCategory;
+        public readonly ILocator SearchText;
+        public readonly ILocator SearchButton;
+
         public SearchHeader(IPage page)
         {
-            _page = page;
-            _searchCategory = _page.GetByText("All Categories");
-            _searchText = _page.GetByLabel("Search For Products");
-            _searchButton = _page.GetByRole(AriaRole.Button, new() { Name = "Search" });
+            SearchCategory = page.GetByText("All Categories");
+            SearchText = page.GetByLabel("Search For Products");
+            SearchButton = page.GetByRole(AriaRole.Button, new() { Name = "Search" });
         }
+
+
     }
 }

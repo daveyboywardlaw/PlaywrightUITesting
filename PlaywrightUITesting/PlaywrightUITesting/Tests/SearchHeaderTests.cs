@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Playwright;
@@ -13,28 +14,39 @@ namespace PlaywrightUITesting.Tests
 {
     internal class SearchHeaderTests : PageTest
     {
+        CommonActions actions = new CommonActions();
+        private static string url;
+
         [SetUp]
-        public void Setup()
+        public void SetupAsync()
         {
-           
+            url = TestContext.Parameters["WebAppUrl"]
+                  ?? throw new Exception("Web url not configured");
         }
 
         [Test]
-        public async Task TestSearchAllCategories()
+        public async Task SearchAllCategories()
         {
-            await using var browser = await Playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
-            {
-                Headless = false
-            });
-
-            var page = await browser.NewPageAsync();
-
-            await page.GotoAsync("https://ecommerce-playground.lambdatest.io/");
-            await page.GetByRole(AriaRole.Button, new() { Name = "Search" }).ClickAsync();
-
-            await Expect(page)
+            await Page.GotoAsync(url);
+            actions.ClickButton(Page, "Search");
+         
+            //Assertion
+            await Expect(Page)
                 .ToHaveURLAsync("https://ecommerce-playground.lambdatest.io/index.php?route=product%2Fsearch&search=");
+        }
 
+        [Test]
+        public async Task SearchPhones()
+        {
+            SearchHeader searchHeader = new SearchHeader(Page);
+            await Page.GotoAsync(url);
+
+            actions.PopulateField(searchHeader.SearchText, "Phones");
+            actions.ClickButton(Page, "Search");
+
+            //Assertion
+            await Expect(Page)
+                .ToHaveURLAsync("https://ecommerce-playground.lambdatest.io/index.php?route=product%2Fsearch&search=Phones");
         }
     }
 }
