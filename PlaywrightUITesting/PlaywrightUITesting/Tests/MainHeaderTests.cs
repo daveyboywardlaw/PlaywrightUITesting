@@ -24,7 +24,7 @@ namespace PlaywrightUITesting.Tests
         }
 
         [Test]
-        public async Task CheckMainHeaderNonSearchElements()
+        public async Task CheckMainHeaderNonDropDownElements()
         {
             await using var browser = await Playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
             {
