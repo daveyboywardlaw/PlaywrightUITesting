@@ -10,6 +10,7 @@ using NUnit.Framework.Interfaces;
 using System.Reflection.Metadata;
 using System.Security.Principal;
 using Microsoft.Playwright;
+using VerifyNUnit;
 
 namespace PlaywrightUITesting.Tests
 {
@@ -63,8 +64,12 @@ namespace PlaywrightUITesting.Tests
             NavigationHeader nh = new NavigationHeader(Page);
 
             await nh.MegaMenu.ClickAsync();
+            var currentScreenShot = await Page.ScreenshotAsync();
+            
 
-            await nh.AddOns.ClickAsync();
+
+            await Expect(Page)
+                .ToHaveURLAsync("https://ecommerce-playground.lambdatest.io/index.php?route=extension/maza/blog/home");
 
         }
     }

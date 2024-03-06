@@ -1,4 +1,5 @@
 ﻿using Microsoft.Playwright;
+using VerifyTests;
 
 namespace PlaywrightUITesting
 {
@@ -12,6 +13,12 @@ namespace PlaywrightUITesting
             await using var browser = await playwright.Webkit.LaunchAsync();
             var page = await browser.NewPageAsync();
             return page;
+        }
+
+
+        public void PassScreenshotToVerify(string buffer)
+        {
+
         }
     }
 }
