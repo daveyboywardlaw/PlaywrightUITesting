@@ -21,11 +21,13 @@ namespace PlaywrightUITesting.Pages
 
         public NavigationHeader(IPage Page)
         {
-            Home = Page.Locator(".navbar-collapse .horizontal .nav-item:nth-match").Nth(0);
+            Home = Page.Locator(".navbar-collapse .horizontal .nav-item").Nth(0);
             Special = Page.Locator(".navbar-collapse .horizontal .nav-item").Nth(1);
             Blog = Page.Locator(".navbar-collapse .horizontal .nav-item").Nth(2);
             MegaMenu = Page.Locator(".mega-menu");
             AddOns = Page.GetByText("AddOns");
+            ShopByCategory = Page.GetByLabel("Shop By Category").Nth(1);
+            MyAccount = Page.GetByTitle("My account");
 
         }
 

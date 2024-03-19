@@ -15,8 +15,7 @@ using VerifyNUnit;
 namespace PlaywrightUITesting.Tests
 {
     public class NavigationHeaderTests : PageTest
-    {    
-        CommonActions actions = new CommonActions();
+    {
         private static string url;
 
         [SetUp]
@@ -24,13 +23,13 @@ namespace PlaywrightUITesting.Tests
         {
             url = TestContext.Parameters["WebAppUrl"]
                   ?? throw new Exception("Web url not configured");
+
+            Page.GotoAsync(url);
         }
 
         [Test]
         public async Task NavigateLinks()
         {
-            await Page.GotoAsync(url);
-
             NavigationHeader nh = new NavigationHeader(Page);
             var NavigationHeaderElements = nh.AddElementsAreAvailableToBeClicked();
 
@@ -57,20 +56,36 @@ namespace PlaywrightUITesting.Tests
         }
 
         [Test]
-        public async Task NavigateLinksWithDropDowns()
+        public async Task NavigateLinksShopByCategory()
         {
-            await Page.GotoAsync(url);
+            NavigationHeader nh = new NavigationHeader(Page);
 
+            await nh.ShopByCategory.ClickAsync();
+
+            await Expect(Page
+                    .GetByRole(AriaRole.Heading, new() { Name = "Top Categories" }))
+                .ToBeVisibleAsync();
+        }
+
+        [Test]
+        public async Task NavigateLinksMegMenu()
+        {
             NavigationHeader nh = new NavigationHeader(Page);
 
             await nh.MegaMenu.ClickAsync();
-            var currentScreenShot = await Page.ScreenshotAsync();
-            
+
+            Expect(Page.GetByTitle("Apple"));
+        }
 
 
-            await Expect(Page)
-                .ToHaveURLAsync("https://ecommerce-playground.lambdatest.io/index.php?route=extension/maza/blog/home");
+        [Test]
+        public async Task NavigateAddOns()
+        {
+            NavigationHeader nh = new NavigationHeader(Page);
 
+            await nh.AddOns.ClickAsync();
+
+            Expect(Page.GetByTitle("Modules"));
         }
     }
 }
