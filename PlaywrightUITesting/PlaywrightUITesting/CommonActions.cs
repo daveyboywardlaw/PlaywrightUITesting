@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Playwright;
 using Microsoft.Playwright.NUnit;
+using Newtonsoft.Json.Linq;
 using PlaywrightUITesting.Interfaces;
 
 namespace PlaywrightUITesting
@@ -29,6 +30,11 @@ namespace PlaywrightUITesting
         public void PopulateField(ILocator locator, string value, int elementNumber = 0 )
         {
             locator.Nth(elementNumber).FillAsync(value);
+        }
+
+        public void ClickLink(ILocator locator)
+        {
+            locator.ClickAsync();
         }
 
     }
