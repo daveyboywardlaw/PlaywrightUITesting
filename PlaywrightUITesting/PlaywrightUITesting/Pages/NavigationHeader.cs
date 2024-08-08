@@ -27,7 +27,7 @@ namespace PlaywrightUITesting.Pages
             MegaMenu = Page.Locator(".mega-menu");
             AddOns = Page.GetByText("AddOns");
             ShopByCategory = Page.GetByLabel("Shop By Category").Nth(1);
-            MyAccount = Page.GetByTitle("My account");
+            MyAccount = Page.GetByRole(AriaRole.Button, new() { Name = " My account"});            
 
         }
 
