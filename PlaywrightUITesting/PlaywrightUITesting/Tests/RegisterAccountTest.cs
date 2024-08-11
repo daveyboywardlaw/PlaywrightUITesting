@@ -32,16 +32,6 @@ namespace PlaywrightUITesting.Tests
         [Test]
         public async Task ClickContinueWIthNoData()
         {
-            //NavigationHeader navHead = new NavigationHeader(Page);
-            //RegisterAccount regAccount = new RegisterAccount(Page);
-            //AccountLogIn accLogIn = new AccountLogIn(Page);
-            //CommonActions commActions = new CommonActions();
-
-
-            //await navHead.MyAccount.ClickAsync();
-            //await accLogIn.NewCustomerContinue.ClickAsync();
-            //await regAccount.Continue.ClickAsync();
-
             List<String> guidanceMessages = guidance.GenerateGuidanceForRegisterAccount();
 
             RegisterAccount regAccount = new RegisterAccount(Page);
@@ -58,22 +48,15 @@ namespace PlaywrightUITesting.Tests
         }
 
         [Test]
-        public async Task RegisterAccount()
+        public async Task RegisterAlreadyRegisteredAccount()
         {
             RegisterAccount regAccount = new RegisterAccount(Page);
             List<String> guidanceMessages = guidance.GenerateGuidanceForRegisterAccount();
 
             await GoToRegisterAccount();
-            await regAccount.FirstName.FillAsync("Bill");
-            await regAccount.LastName.FillAsync("Smith");
-            await regAccount.EMail.FillAsync("test@test.com");
-            await regAccount.Telephone.FillAsync("123456");
-            await regAccount.Password.FillAsync("password");
-            await regAccount.PasswordConfirm.FillAsync("password");
-            await regAccount.CheckAgreePrivacyPolicy.ClickAsync();
 
+            await PopulateFields("Bob", "Bill", "dave@dave.com", "678789", "password", "password");
             await regAccount.Continue.ClickAsync();
-
         }
 
 
@@ -87,7 +70,45 @@ namespace PlaywrightUITesting.Tests
 
             await navHead.MyAccount.ClickAsync();
             await accLogIn.NewCustomerContinue.ClickAsync();
-          
+        }
+
+        public async Task PopulateFields(string FirstName = "", string LastName = "", String Email = "",
+            string Phone = "", String Password = "", string PasswordConfirm = "")
+        {
+           Dictionary<String,String> fieldsToPopulate = new Dictionary<string, string>();
+
+            fieldsToPopulate.Add("FirstName", FirstName);
+            fieldsToPopulate.Add("LastName", LastName);
+            fieldsToPopulate.Add("EMail", Email);
+            fieldsToPopulate.Add("Phone", Phone);
+            fieldsToPopulate.Add("Password", Password);
+            fieldsToPopulate.Add("ConfirmPassword", PasswordConfirm);
+
+            foreach (var item in fieldsToPopulate)
+            {
+                if (item.Value == "")
+                {
+                    fieldsToPopulate.Remove(item.Key);
+                }                  
+            }
+
+            RegisterAccount regAccount = new RegisterAccount(Page);
+
+            foreach (var item in fieldsToPopulate)
+            {
+                if (item.Key == "FirstName")
+                    await regAccount.FirstName.FillAsync(item.Value);
+                if (item.Key == "LastName")
+                    await regAccount.LastName.FillAsync(item.Value);
+                if (item.Key == "EMail")
+                    await regAccount.EMail.FillAsync(item.Value);
+                if (item.Key == "Phone")
+                    await regAccount.Telephone.FillAsync(item.Value);
+                if (item.Key == "Password")
+                    await regAccount.Password.FillAsync(item.Value);
+                if (item.Key == "ConfirmPassword")
+                    await regAccount.PasswordConfirm.FillAsync(item.Value);
+            } 
 
         }
 
