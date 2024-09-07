@@ -7,14 +7,14 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace PlaywrightUITesting
-{ 
+{
     public class Guidance : PageTest
     {
-        public Guidance() 
+        public Guidance()
         {
-        
+
         }
-        
+
         public List<String> GenerateGuidanceForRegisterAccount()
         {
             List<String> RegisterAccountGuidance = new List<String>();
@@ -25,8 +25,19 @@ namespace PlaywrightUITesting
             RegisterAccountGuidance.Add("E-Mail Address does not appear to be valid!");
             RegisterAccountGuidance.Add("Telephone must be between 3 and 32 characters!");
             RegisterAccountGuidance.Add("Password must be between 4 and 20 characters!");
-           
+
             return RegisterAccountGuidance;
         }
+
+        public string DuplicateAccountGuidance
+        {
+            get
+            {
+                return "Warning: E-Mail Address is already registered!";
+            }
+            set 
+            { }
+        }
+
     }
 }

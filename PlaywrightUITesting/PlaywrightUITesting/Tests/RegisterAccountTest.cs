@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Playwright.NUnit;
 using System.Security.Cryptography.X509Certificates;
+using System.Net;
+using System.Text.RegularExpressions;
 
 namespace PlaywrightUITesting.Tests
 {
@@ -35,10 +37,10 @@ namespace PlaywrightUITesting.Tests
             List<String> guidanceMessages = guidance.GenerateGuidanceForRegisterAccount();
 
             RegisterAccount regAccount = new RegisterAccount(Page);
-            await regAccount.Continue.ClickAsync();
-            
             await GoToRegisterAccount();
 
+            await regAccount.Continue.ClickAsync();
+                     
             foreach (var item in guidanceMessages)
             {
                 var GuidanceMessage = Page.GetByText(item);
@@ -51,14 +53,17 @@ namespace PlaywrightUITesting.Tests
         public async Task RegisterAlreadyRegisteredAccount()
         {
             RegisterAccount regAccount = new RegisterAccount(Page);
-            List<String> guidanceMessages = guidance.GenerateGuidanceForRegisterAccount();
-
+            string guidanceToExpect = guidance.DuplicateAccountGuidance;
+            
             await GoToRegisterAccount();
 
             await PopulateFields("Bob", "Bill", "dave@dave.com", "678789", "password", "password");
             await regAccount.Continue.ClickAsync();
-        }
 
+            var locator = Page.GetByText("Warning: E-Mail Address is already registered!");
+            await Expect(locator).ToHaveTextAsync(guidanceToExpect);
+
+          }
 
 
         public async Task GoToRegisterAccount()
@@ -73,7 +78,7 @@ namespace PlaywrightUITesting.Tests
         }
 
         public async Task PopulateFields(string FirstName = "", string LastName = "", String Email = "",
-            string Phone = "", String Password = "", string PasswordConfirm = "")
+            string Phone = "", String Password = "", string PasswordConfirm = "", string PrivicyPolicy = "true")
         {
            Dictionary<String,String> fieldsToPopulate = new Dictionary<string, string>();
 
@@ -83,6 +88,7 @@ namespace PlaywrightUITesting.Tests
             fieldsToPopulate.Add("Phone", Phone);
             fieldsToPopulate.Add("Password", Password);
             fieldsToPopulate.Add("ConfirmPassword", PasswordConfirm);
+            fieldsToPopulate.Add("PrivicyPolicy", PrivicyPolicy);
 
             foreach (var item in fieldsToPopulate)
             {
@@ -108,9 +114,15 @@ namespace PlaywrightUITesting.Tests
                     await regAccount.Password.FillAsync(item.Value);
                 if (item.Key == "ConfirmPassword")
                     await regAccount.PasswordConfirm.FillAsync(item.Value);
+                if (item.Key == "PrivicyPolicy")
+                {
+                    if (item.Value == "true")
+                    {
+                        await regAccount.CheckAgreePrivacyPolicy.ClickAsync();
+                    }
+                    else continue;
+                }                    
             } 
-
         }
-
     }
 }
