@@ -10,7 +10,7 @@ using NUnit.Framework.Interfaces;
 using System.Reflection.Metadata;
 using System.Security.Principal;
 using Microsoft.Playwright;
-using VerifyNUnit;
+//using VerifyNUnit;
 
 namespace PlaywrightUITesting.Tests
 {

@@ -17,25 +17,21 @@ namespace PlaywrightUITesting.Tests
     public class MainHeaderTests : PageTest
     {
         CommonActions util = new CommonActions();
+        private static string url;
 
         [SetUp]
         public async Task Setup()
         {
+            url = TestContext.Parameters["WebAppUrl"]
+                 ?? throw new Exception("Web url not configured");
+            
+            await Page.GotoAsync(url);
         }
 
         [Test]
         public async Task CheckMainHeaderNonDropDownElements()
-        {
-            await using var browser = await Playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
-            {
-               Headless = false
-            });
-
-            var page = await browser.NewPageAsync();
-
-            await page.GotoAsync("https://ecommerce-playground.lambdatest.io/");
-
-            MainHeader mh = new MainHeader(page);
+        {      
+            MainHeader mh = new MainHeader(Page);
             var nonSearchElements = mh.AddElementsAreAvailableToBeClicked();
 
             foreach (var item in nonSearchElements)
@@ -44,22 +40,22 @@ namespace PlaywrightUITesting.Tests
 
                 if (item.Key == "logo")
                 {
-                    await Expect(page)
+                    await Expect(Page)
                         .ToHaveURLAsync("https://ecommerce-playground.lambdatest.io/index.php?route=common/home");
                 }
                 if (item.Key == "compare")
                 {
-                    await Expect(page)
+                    await Expect(Page)
                         .ToHaveURLAsync("https://ecommerce-playground.lambdatest.io/index.php?route=product/compare");
                 }
                 if (item.Key == "like")
                 {
-                    await Expect(page)
+                    await Expect(Page)
                         .ToHaveURLAsync("https://ecommerce-playground.lambdatest.io/index.php?route=account/login");
                 }
                 if (item.Key == "cart")
                 {
-                    await Expect(page.GetByText("Your shopping cart is empty")).ToBeAttachedAsync();
+                    await Expect(Page.GetByText("Your shopping cart is empty")).ToBeAttachedAsync();
                 }
             } 
         }

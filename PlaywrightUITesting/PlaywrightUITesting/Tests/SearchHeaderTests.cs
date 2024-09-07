@@ -22,12 +22,14 @@ namespace PlaywrightUITesting.Tests
         {
             url = TestContext.Parameters["WebAppUrl"]
                   ?? throw new Exception("Web url not configured");
+
+            Page.GotoAsync(url);
         }
 
         [Test]
         public async Task SearchAllCategories()
         {
-            await Page.GotoAsync(url);
+            //await Page.GotoAsync(url);
             actions.ClickButton(Page, "Search");
          
             //Assertion
