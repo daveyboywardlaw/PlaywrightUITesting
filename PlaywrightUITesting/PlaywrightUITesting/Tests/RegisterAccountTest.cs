@@ -27,8 +27,6 @@ namespace PlaywrightUITesting.Tests
                   ?? throw new Exception("Web url not configured");
 
             Page.GotoAsync(url);
-
-           
         }
 
         [Test]
