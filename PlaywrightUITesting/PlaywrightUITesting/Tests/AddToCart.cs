@@ -34,11 +34,8 @@ namespace PlaywrightUITesting.Tests
             await Page.GetByText("iPod Nano").Nth(1).ClickAsync();
             await Page.GetByRole(AriaRole.Button, new() { Name = "Add to Cart" }).ClickAsync(); ;
             await Page.GetByText("View Cart").ClickAsync();
-            // await Page.GetByTitle("Apple").ClickAsync();
-            // 
 
             await Expect(Page.Locator("table.table.table-bordered tr:nth-child(4) td:nth-child(1)")).ToContainTextAsync("Total");
-                
         }
     }
 
