@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Playwright.NUnit;
 using System.Security.Cryptography.X509Certificates;
 using System.Net;
 using System.Text.RegularExpressions;
@@ -51,18 +50,17 @@ namespace PlaywrightUITesting.Tests
         public async Task RegisterAlreadyRegisteredAccount()
         {
             RegisterAccount regAccount = new RegisterAccount(Page);
+            CommonActions commonActions = new CommonActions();
             string guidanceToExpect = guidance.DuplicateAccountGuidance;
             
             await GoToRegisterAccount();
 
             await PopulateFields("Bob", "Bill", "dave@dave.com", "678789", "password", "password");
-            await regAccount.Continue.ClickAsync();
+            commonActions.ClickButton(Page, "Continue");
 
             var locator = Page.GetByText("Warning: E-Mail Address is already registered!");
             await Expect(locator).ToHaveTextAsync(guidanceToExpect);
-
           }
-
 
         public async Task GoToRegisterAccount()
         {

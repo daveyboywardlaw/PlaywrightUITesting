@@ -12,7 +12,7 @@ namespace PlaywrightUITesting
 {
     public class CommonActions : PageTest, ICommonActions
     {
-        public void ClickButton(IPage page,  string buttonText)
+        public void ClickButton(IPage page, string buttonText)
         {
             var button =  page.GetByRole(AriaRole.Button, new() { Name = buttonText }).ClickAsync();
         }

@@ -25,11 +25,5 @@ namespace PlaywrightUITesting
 
             return randomValue;
         }
-
-
-        public void PassScreenshotToVerify(string buffer)
-        {
-
-        }
     }
 }

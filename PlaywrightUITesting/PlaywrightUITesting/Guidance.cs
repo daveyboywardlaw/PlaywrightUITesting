@@ -28,7 +28,6 @@ namespace PlaywrightUITesting
 
             return RegisterAccountGuidance;
         }
-
         public string DuplicateAccountGuidance
         {
             get
