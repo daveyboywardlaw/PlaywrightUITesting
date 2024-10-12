@@ -31,6 +31,5 @@ namespace PlaywrightUITesting.Pages
             Continue = Page.Locator("css=.btn-primary").Nth(1);
             CheckAgreePrivacyPolicy = Page.GetByText("I have read and agree to the ");
          }
-
     }
 }
