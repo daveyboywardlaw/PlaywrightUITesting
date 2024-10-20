@@ -29,10 +29,8 @@ namespace PlaywrightUITesting.Tests
         [Test]
         public async Task SearchAllCategories()
         {
-            //await Page.GotoAsync(url);
             actions.ClickButton(Page, "Search");
          
-            //Assertion
             await Expect(Page)
                 .ToHaveURLAsync("https://ecommerce-playground.lambdatest.io/index.php?route=product%2Fsearch&search=");
         }
@@ -41,7 +39,7 @@ namespace PlaywrightUITesting.Tests
         public async Task SearchPhones()
         {
             SearchHeader searchHeader = new SearchHeader(Page);
-            await Page.GotoAsync(url);
+          //  await Page.GotoAsync(url);
 
             actions.PopulateField(searchHeader.SearchText, "Phones");
             actions.ClickButton(Page, "Search");

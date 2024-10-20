@@ -22,11 +22,6 @@ namespace PlaywrightUITesting
             return page.GetByRole(AriaRole.Button, new() { Name = buttonText });
         }
 
-        public void SelectCategory(string category)
-        {
-            // Method to select a dropdown value
-        }
-
         public void PopulateField(ILocator locator, string value, int elementNumber = 0 )
         {
             locator.Nth(elementNumber).FillAsync(value);
